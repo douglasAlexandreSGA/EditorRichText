@@ -1,7 +1,7 @@
-let optionButtons = document.querySelector(".option-button")
+let optionButtons = document.querySelectorAll(".option-button")
 let avancedOptionButton = document.querySelectorAll(".adv-option-button")
-let fontName = document.getElementById("fontName")
-let fontSizeRef = document.getElementById("fontSize")
+let fontName = document.getElementById("font-name")
+let fontSizeRef = document.getElementById("font-size")
 let writingArea = document.getElementById("text-input")
 let linkButton = document.getElementById("createLink")
 let alignButtons = document.querySelectorAll(".align")
@@ -35,7 +35,35 @@ const initializer = () => {
         option.innerHTML = value;
         fontName.appendChild(option);
     })
-}
+
+    //fontSize allows only till 7
+    for (let i = 1; i <= 7; i++) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.innerHTML = i;
+        fontSizeRef.appendChild(option)
+    }
+
+    //default size
+    fontSizeRef.value = 3;
+};
+
+
+
+//main logic
+const modifyText = (command, defaultUi, value) => {
+    //execCommand executes command on selected text
+    document.execCommand(command, defaultUi, value);
+};
+
+
+//For basic operations which don't need value parameter
+optionButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        modifyText(button.id, false, null);
+    });
+});
+
 
 //highlight cliqued button
 const highlighter = (className, needsRemoval) => {
