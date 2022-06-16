@@ -1,7 +1,7 @@
 let optionButtons = document.querySelectorAll(".option-button")
 let avancedOptionButton = document.querySelectorAll(".adv-option-button")
-let fontName = document.getElementById("font-name")
-let fontSizeRef = document.getElementById("font-size")
+let fontName = document.getElementById("fontName")
+let fontSizeRef = document.getElementById("fontSize")
 let writingArea = document.getElementById("text-input")
 let linkButton = document.getElementById("createLink")
 let alignButtons = document.querySelectorAll(".align")
@@ -9,12 +9,14 @@ let spacingButtons = document.querySelectorAll(".spacing")
 let formatButtons = document.querySelectorAll(".format")
 let scriptButtons = document.querySelectorAll(".script")
 
+
 // List of FontList
 let fontList = [
     "Arial",
     "Verdana",
     "Times New Roman",
-    "Garamond", "Georgia",
+    "Garamond",
+    "Georgia",
     "Courier New",
     "cursive",
 ]
@@ -49,7 +51,6 @@ const initializer = () => {
 };
 
 
-
 //main logic
 const modifyText = (command, defaultUi, value) => {
     //execCommand executes command on selected text
@@ -64,6 +65,26 @@ optionButtons.forEach((button) => {
     });
 });
 
+//options that require value parameter (e.g colors, fonts)
+avancedOptionButton.forEach((button) => {
+    button.addEventListener("change", () => {
+        modifyText(button.id, false, button.value);
+    });
+});
+
+//Link
+linkButton.addEventListener("click", () => {
+    let userLink = prompt("Enter URL");
+    //if link has http them pass directly else add https
+    if (/http/i.test(userLink)) {
+        modifyText(linkButton.id, false, userLink);
+    }
+    else{
+        userLink = "http://" + userLink;
+        modifyText(linkButton.id, false, userLink);
+    }
+    
+})
 
 //highlight cliqued button
 const highlighter = (className, needsRemoval) => {
